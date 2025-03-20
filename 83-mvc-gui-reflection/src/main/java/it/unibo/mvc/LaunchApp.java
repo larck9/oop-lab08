@@ -1,6 +1,7 @@
 package it.unibo.mvc;
-
+import java.lang.reflect.InvocationTargetException;
 import it.unibo.mvc.api.DrawNumberController;
+import it.unibo.mvc.api.DrawNumberView;
 import it.unibo.mvc.controller.DrawNumberControllerImpl;
 import it.unibo.mvc.model.DrawNumberImpl;
 import it.unibo.mvc.view.DrawNumberSwingView;
@@ -10,7 +11,8 @@ import it.unibo.mvc.view.DrawNumberSwingView;
  */
 public final class LaunchApp {
 
-    private LaunchApp() { }
+    private LaunchApp() {
+    }
 
     /**
      * Runs the application.
@@ -24,8 +26,17 @@ public final class LaunchApp {
      * @throws IllegalArgumentException in case of reflection issues
      */
     public static void main(final String... args) {
+
         final var model = new DrawNumberImpl();
         final DrawNumberController app = new DrawNumberControllerImpl(model);
-        app.addView(new DrawNumberSwingView());
+        try{
+            for(int i=0;i<3;i++){                               //the class name has to come with package
+                app.addView((DrawNumberView) Class.forName("it.unibo.mvc.view.DrawNumberStandardOutputView").getConstructor().newInstance());
+                app.addView((DrawNumberView) Class.forName("it.unibo.mvc.view.DrawNumberSwingView").getConstructor().newInstance());
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

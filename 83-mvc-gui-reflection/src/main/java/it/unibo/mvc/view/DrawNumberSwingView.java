@@ -21,7 +21,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 /**
  * Graphical {@link DrawNumberView} implementation.
  */
-public final class DrawNumberSwingView implements DrawNumberView {
+public class DrawNumberSwingView implements DrawNumberView {
 
     private static final String FRAME_NAME = "Draw Number App";
     private static final String QUIT = "Quit";
